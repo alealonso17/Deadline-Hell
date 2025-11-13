@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import UserDataChecks from "./utils/UserDataChecks.js";
 import connection from './db/connection.js'
+import bcrypt from "bcrypt";
 
 
 const app = express();
@@ -74,10 +75,12 @@ app.post('/register', async (req, res) => {
     // SI TODO VA BIEN → CONTINÚA REGISTRO
     // =============================
 
+    const hashedPass = await bcrypt.hash(password, 10); 
+
     await connection.execute(
       `INSERT INTO users (username, email, password_hash)
         VALUES (?, ?, ?)`,
-      [username, email, password]
+      [username, email, hashedPass]
     );
 
     return res.status(200).json({ok:true, field:'',message: "Las contraseñas no coinciden." }); 
