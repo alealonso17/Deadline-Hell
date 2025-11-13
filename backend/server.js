@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import UserDataChecks from "./utils/UserDataChecks";
-import connection from './db/connection'
+import UserDataChecks from "./utils/UserDataChecks.js";
+import connection from './db/connection.js'
 
 
 const app = express();
