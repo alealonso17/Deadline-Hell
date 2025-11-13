@@ -83,11 +83,11 @@ app.post('/register', async (req, res) => {
       [username, email, hashedPass]
     );
 
-    return res.status(200).json({ok:true, field:'',message: "Las contraseñas no coinciden." }); 
+    return res.status(200).json({ok:true, field:'',message: "Usuario registrado correctamente" }); 
 
   } catch (err) {
-
-
+    console.log("Algo ocurrio mal en el registration")
+    console.log(err); 
   }
 });
 
