@@ -18,63 +18,51 @@ app.get("/", (req, res) => {
   res.send("🔥 Deadline Hell API is running!");
 });
 
-
-//----------------------------------------------------------
-//----------------------------------------------------------
-//REGISTER
-//----------------------------------------------------------
-//----------------------------------------------------------
 app.post('/register', async (req, res) => {
   try {
     const { username, email, password, ConfirmPassword } = req.body;
-
 
     // =============================
     // VALIDACIONES
     // =============================
 
-    // USERNAME
     const usernameCheck = UserDataChecks.username(username);
     if (!usernameCheck.valid) {
-      return res.status(500).json({
+      return res.status(400).json({
         ok: false,
         field: "username",
         message: usernameCheck.message
       });
     }
 
-    // EMAIL
     const emailCheck = UserDataChecks.email(email);
     if (!emailCheck.valid) {
-      return res.status(500).json({
+      return res.status(400).json({
         ok: false,
         field: "email",
         message: emailCheck.message
       });
     }
 
-    // PASSWORD
     const passwordCheck = UserDataChecks.password(password);
     if (!passwordCheck.valid) {
-      return res.status(500).json({
+      return res.status(400).json({
         ok: false,
         field: "password",
         message: passwordCheck.message
       });
     }
 
-    // CONFIRM PASSWORD
     if (password !== ConfirmPassword) {
-      return res.status(500).json({
+      return res.status(400).json({
         ok: false,
         field: "ConfirmPassword",
         message: "Las contraseñas no coinciden."
       });
     }
 
-
     // =============================
-    // SI TODO VA BIEN → CONTINÚA REGISTRO
+    // HASH + SAVE
     // =============================
 
     const hashedPass = await bcrypt.hash(password, 10);
@@ -85,17 +73,21 @@ app.post('/register', async (req, res) => {
       [username, email, hashedPass]
     );
 
-    return res.status(200).json({ ok: true, field: '', message: "Usuario registrado correctamente" });
+    return res.status(200).json({
+      ok: true,
+      message: "Usuario registrado correctamente"
+    });
 
   } catch (err) {
-    console.log("Algo ocurrio mal en el registration")
-    console.log(err);
+    console.error("❌ ERROR REAL EN /register:", err);
+    
+    return res.status(500).json({
+      ok: false,
+      message: "Error interno en el servidor",
+      error: err.message
+    });
   }
 });
-
-
-
-
 
 
 //----------------------------------------------------------
