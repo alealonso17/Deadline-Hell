@@ -7,7 +7,7 @@ localStorage.clear();
 logInForm.addEventListener('submit', async (e) => {
 
     e.preventDefault();
-    console.log("hola")
+    
     
 
 
@@ -33,12 +33,11 @@ logInForm.addEventListener('submit', async (e) => {
                 <h1 class="text-[red] text-sm"> Wrong Email Or password </h1> `
             );
         errorCount++;
-        console.log(errorCount); 
         return; 
 
     }
 
-    console.log(data.msg);
+    
  
 
     localStorage.setItem("userData", JSON.stringify(data.userData));

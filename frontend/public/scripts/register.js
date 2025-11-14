@@ -4,7 +4,7 @@ const registerForm = document.getElementById("registerForm");
 
 registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log("hola")
+    
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -28,10 +28,10 @@ registerForm.addEventListener('submit', async (e) => {
     const data = await response.json() ; 
     if(!data.ok){
         const ConfirmPasswordElement = document.getElementById("ConfirmPassword") ; 
-        ConfirmPasswordElement.insertAdjacentHTML("beforeend", `<h1 class="red">${data.message}</h1>`)
-        return false
+        ConfirmPasswordElement.insertAdjacentHTML("beforeend", `<h1 class="color-red">${data.message}</h1>`)
+        return false;
     }else{
-        console.log(data.message); 
+         
         return true; 
     }
 

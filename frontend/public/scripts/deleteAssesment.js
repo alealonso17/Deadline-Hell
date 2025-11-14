@@ -19,7 +19,7 @@ export async function deleteAssesment(assesmentID, email) {
         return; 
     };
 
-    updateLocalStorage(data.updatedUserData);
+    updateLocalStorage(data.updatedUserData); 
     return true; 
 
 }

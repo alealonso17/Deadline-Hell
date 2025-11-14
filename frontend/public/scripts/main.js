@@ -59,7 +59,6 @@ assignmentForm.addEventListener('submit', async (e) => {
         return;
     }
     updateLocalStorage(data.updatedUserData);
-    console.log("updated local storage succesfully", localStorage.getItem("userData"));
     window.location.reload();
 
 });

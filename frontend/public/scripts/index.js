@@ -3,7 +3,7 @@ import { SecurityBoxes } from "./SecurityBoxes.js";
 
 window.addEventListener("DOMContentLoaded", () => {
     const data = localStorage.getItem("userData");
-    console.log("LocalStorageUploaded", data);
+    
 
     if (!data) {
         console.log("NO HAY USER -> REDIRECT AL LOGIN");
