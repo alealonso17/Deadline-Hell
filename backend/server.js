@@ -178,7 +178,7 @@ app.post("/deleteAssesment", async (req, res) => {
     ); 
 
     console.log("Assesment Deleted Sucessfully"); 
-    const updatedUserData = GetUserData.getAll(email); 
+    const updatedUserData = await GetUserData.getAll(email); 
     return res.status(200).json({isOk : true, updatedUserData, msg : "Assesment Deleted Sucessfully"}); 
 
 

@@ -1,37 +1,39 @@
-import {getDaysLeft } from "./daysleft.js";
+import { getDaysLeft } from "./daysleft.js";
 import { formatDate } from "./formatDate.js";
 import { createStyles } from "./estilosContainers.js";
+import { SecurityBoxes } from "./SecurityBoxes.js";
+
 
 const userData = JSON.parse(localStorage.getItem("userData"));
 console.log(userData);
 
-const usernameWelcome = document.getElementById("usernameWelcome"); 
-usernameWelcome.innerText = `${userData.user.username} !`; 
+const usernameWelcome = document.getElementById("usernameWelcome");
+usernameWelcome.innerText = `${userData.user.username} !`;
 
 
 
 //-Asignments 
 
 const assesments = document.getElementById("assesments");
-const assessmentsData = JSON.parse(localStorage.getItem("userData")).assessments; 
+const assessmentsData = JSON.parse(localStorage.getItem("userData")).assessments;
 
-if(assessmentsData.length === 0){
+if (assessmentsData.length === 0) {
     assesments.insertAdjacentHTML("beforeend",
         /*html*/`<p class="opacity-[50%]">No deadlines yet... enjoy the peace while it lasts! 🎉</p>`
     );
-}; 
+};
 
 assessmentsData.forEach(assesment => {
 
     const title = assesment.title;
-    const dueDate = assesment.due_date; 
+    const dueDate = assesment.due_date;
     const created_at = formatDate(assesment.created_at);
-    const progress = assesment.progress; 
+    const progress = assesment.progress;
     const daysLeft = getDaysLeft(dueDate);
 
-    const style = createStyles(daysLeft); 
-    
-    
+    const style = createStyles(daysLeft);
+
+
 
 
     assesments.insertAdjacentHTML("beforeend",
@@ -54,7 +56,7 @@ assessmentsData.forEach(assesment => {
             </button>
 
             <!-- Delete -->
-            <button class="text-red-400 hover:text-red-300 transition">
+   <button class="deleteBtn text-red-400 hover:text-red-300 transition" data-title="${title}" data-id="${assesment.id}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -118,7 +120,19 @@ assessmentsData.forEach(assesment => {
 
 </div>`
     )
-}); 
+});
 
+
+//For deleting 
+const allDeleteBtns = document.querySelectorAll(".deleteBtn");
+
+allDeleteBtns.forEach(btn => {
+    btn.onclick = () => {
+        const title = btn.dataset.title;
+        const assesmentID = btn.dataset.id;
+
+        SecurityBoxes.delete(title, assesmentID);
+    };
+});
 
 

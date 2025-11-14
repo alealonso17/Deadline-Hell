@@ -1,5 +1,6 @@
-import { deleteAssesment } from "./main.js";
+import { deleteAssesment } from "./deleteAssesment.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
+
 
 export class SecurityBoxes {
 
@@ -106,7 +107,7 @@ export class SecurityBoxes {
                     <button id="confirmDelete"
                         class="w-1/2 py-2 rounded-xl bg-red-500/80 hover:bg-red-600 
                                transition text-white font-semibold">
-                        Logout
+                        Delete
                     </button>
 
                 </div>
@@ -127,9 +128,10 @@ export class SecurityBoxes {
             modal.remove();
         };
 
-        document.getElementById("confirmDelete").onclick =  () => {
-            deleteAssesment(assesmentID, JSON.parse(localStorage.getItem("userData")).user.email); 
+        document.getElementById("confirmDelete").onclick =  async () => {
+            await deleteAssesment(assesmentID, JSON.parse(localStorage.getItem("userData")).user.email);
             window.location.reload();
+            
         };
     }
 }

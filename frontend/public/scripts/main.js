@@ -1,9 +1,11 @@
+import { SecurityBoxes } from "./SecurityBoxes.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
 
 const assignmentForm = document.getElementById("assignmentForm");
 const titleInput = document.getElementById("addAssignment");  // ID REAL
 const dateInput = document.getElementById("due"); // ID REAL
 const reload = document.getElementById("reload");
+const deleteBTN = document.getElementById("delete") 
 
 function updateButtonState() {
     const title = titleInput.value.trim();
@@ -20,7 +22,7 @@ dateInput.addEventListener("input", updateButtonState);
 updateButtonState();
 
 
-
+ 
 //For sending the assement
 assignmentForm.addEventListener('submit', async (e) => {
 
@@ -67,28 +69,4 @@ reload.onclick = () => {
     window.location.reload();
 }
 
-
-export async function deleteAssesment(assesmentID, email) {
-    const response = await fetch("https://deadline-hell-production.up.railway.app/deleteAssesment", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            assesmentID,
-            email
-        })
-    });
-
-    const data = await response.json() ; 
-
-    if(!data.isOk){
-        console.log(data.msg); 
-        return; 
-    };
-
-    updateLocalStorage(data.updatedUserData); 
-    return true; 
-
-}
 
