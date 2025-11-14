@@ -27,9 +27,20 @@ assessmentsData.forEach(assesment => {
 
     const title = assesment.title;
     const dueDate = assesment.due_date;
+    const dueDateNormal = formatDate(dueDate); 
     const created_at = formatDate(assesment.created_at);
     const progress = assesment.progress;
     const daysLeft = getDaysLeft(dueDate);
+    
+    let daysLeftMsg = ''; 
+
+    if(daysLeft < 0){
+        daysLeftMsg = (`Due date passed   (${dueDateNormal}) `); 
+    }else if(daysLeft == 0){
+        daysLeftMsg = (`Due TODAY    (${dueDateNormal})`);
+    }else if(daysLeft > 0){
+        daysLeftMsg = (`${daysLeft} days left (${dueDateNormal})`); 
+    }; 
 
     const style = createStyles(daysLeft);
 
@@ -78,7 +89,7 @@ assessmentsData.forEach(assesment => {
 
         <span class="${style.dot}">•</span>
 
-        <span>${daysLeft} days left</span>
+        <span>${daysLeftMsg}</span>
     </div>
 
     <!-- PROGRESS -->
