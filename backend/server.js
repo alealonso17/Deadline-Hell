@@ -4,6 +4,7 @@ import UserDataChecks from "./utils/UserDataChecks.js";
 import connection from './db/connection.js';
 import bcrypt from "bcrypt";
 import { LogInCheck } from "./utils/LogInCheck.js";
+import GetUserData from "./utils/getUserData.js";
 
 
 const app = express();
@@ -112,7 +113,9 @@ app.post('/logIn', async (req, res) => {
 
     if(status.isOk){
       console.log(status.msg); 
-      return res.status(200).json({isOk: true , msg : status.msg}); 
+      const userData = await GetUserData.getAll(email); 
+      console.log(userData);
+      return res.status(200).json({isOk: true , msg : status.msg, userData}); 
     }else{
       console.log(status.msg); 
       return res.status(500).json({isOk: false , msg : status.msg}); 

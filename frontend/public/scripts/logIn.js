@@ -1,8 +1,16 @@
+
+
 const logInForm = document.getElementById("logInForm");
+const labelEmail = document.getElementById("labelEmail");
+let errorCount = 0;
+localStorage.clear();   
 
 logInForm.addEventListener('submit', async (e) => {
 
     e.preventDefault();
+    console.log("hola")
+    
+
 
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim()
@@ -16,17 +24,33 @@ logInForm.addEventListener('submit', async (e) => {
             email,
             password
         })
-    }); 
+    });
 
-    const data = await response.json(); 
+    const data = await response.json();
 
-    if(!data.isOk){
-        console.log(data.msg); 
+    if (!data.isOk) {
+        if (errorCount === 0)
+            labelEmail.insertAdjacentHTML("beforeend", /*html*/`
+                <h1 class="text-[red] text-sm"> Wrong Email Or password </h1> `
+            );
+        errorCount++;
+        console.log(errorCount); 
         return; 
+
     }
 
-    console.log(data.msg); 
+    console.log(data.msg);
+
+ 
+        console.log(data.userData);
+ 
+
+    localStorage.setItem("userData", JSON.stringify(data.userData));
+    window.location.href = "index.html"; 
+
+}
 
 
 
-})
+
+); 
