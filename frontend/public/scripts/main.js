@@ -3,7 +3,7 @@ import { updateLocalStorage } from "./updateLocalStorage.js";
 const assignmentForm = document.getElementById("assignmentForm");
 const titleInput = document.getElementById("addAssignment");  // ID REAL
 const dateInput = document.getElementById("due"); // ID REAL
-const reload = document.getElementById("reload"); 
+const reload = document.getElementById("reload");
 
 function updateButtonState() {
     const title = titleInput.value.trim();
@@ -31,9 +31,9 @@ assignmentForm.addEventListener('submit', async (e) => {
 
     const userData = JSON.parse(localStorage.getItem("userData"));
     const id = userData.user.id;
-    const email = userData.user.email; 
+    const email = userData.user.email;
 
-    
+
 
     const response = await fetch("https://deadline-hell-production.up.railway.app/addAssesments", {
         method: "POST",
@@ -49,20 +49,46 @@ assignmentForm.addEventListener('submit', async (e) => {
 
     });
 
-    const data = await response.json(); 
+    const data = await response.json();
 
-    if(!data.isOk){
-        console.log("Algo ocurrio mal pasando el assesment a mysql"); 
-        return; 
-    } 
-    updateLocalStorage(data.updatedUserData); 
-    console.log("updated local storage succesfully", localStorage.getItem("userData")); 
+    if (!data.isOk) {
+        console.log("Algo ocurrio mal pasando el assesment a mysql");
+        return;
+    }
+    updateLocalStorage(data.updatedUserData);
+    console.log("updated local storage succesfully", localStorage.getItem("userData"));
+    window.location.reload();
 
-
-}); 
+});
 
 
 //RELOAD BUTTON 
 reload.onclick = () => {
-    window.location.reload(); 
-}  
+    window.location.reload();
+}
+
+
+export async function deleteAssesment(assesmentID, email) {
+    const response = await fetch("https://deadline-hell-production.up.railway.app/deleteAssesment", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            assesmentID,
+            email
+        })
+    });
+
+    const data = await response.json() ; 
+
+    if(!data.isOk){
+        console.log(data.msg); 
+        return; 
+    };
+
+    updateLocalStorage(data.updatedUserData); 
+    return true; 
+
+}
+

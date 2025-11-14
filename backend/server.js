@@ -158,6 +158,38 @@ app.post('/addAssesments', async (req, res) => {
 
 
 });
+
+
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+//FOR deleting ASSESMENT
+//----------------------------------------------------------
+//----------------------------------------------------------
+
+app.post("/deleteAssesment", async (req, res) => {
+  try{
+
+    const {assesmentID, email} = req.body; 
+  
+    await connection.execute(
+      'DELETE FROM assessments WHERE id = ?;',
+      [assesmentID]
+    ); 
+
+    console.log("Assesment Deleted Sucessfully"); 
+    const updatedUserData = GetUserData.getAll(email); 
+    return res.status(200).json({isOk : true, updatedUserData, msg : "Assesment Deleted Sucessfully"}); 
+
+
+  }catch(err){
+    console.log("Assesment Deleted Sucessfully", err);
+    return res.status(500).json({isOk : false, msg : "fail"}); 
+  }
+
+
+}); 
+
 // Puerto (Railway usa process.env.PORT)
 const PORT = process.env.PORT || 3000;
 
