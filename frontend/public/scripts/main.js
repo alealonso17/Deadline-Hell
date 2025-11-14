@@ -1,6 +1,7 @@
 import { SecurityBoxes } from "./SecurityBoxes.js";
 import { updateLocalStorage } from "./updateLocalStorage.js";
 
+
 const assignmentForm = document.getElementById("assignmentForm");
 const titleInput = document.getElementById("addAssignment");  // ID REAL
 const dateInput = document.getElementById("due"); // ID REAL

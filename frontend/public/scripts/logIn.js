@@ -42,7 +42,7 @@ logInForm.addEventListener('submit', async (e) => {
  
 
     localStorage.setItem("userData", JSON.stringify(data.userData));
-    window.location.href = "index.html"; 
+    window.location.href = "home.html"; 
 
 }
 
