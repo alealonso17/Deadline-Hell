@@ -27,7 +27,8 @@ registerForm.addEventListener('submit', async (e) => {
 
     const data = await response.json() ; 
     if(!data.ok){
-        console.log(data.message); 
+        const ConfirmPasswordElement = document.getElementById("ConfirmPassword") ; 
+        ConfirmPasswordElement.insertAdjacentHTML("beforeend", `<h1 class="red">${data.message}</h1>`)
         return false
     }else{
         console.log(data.message); 
