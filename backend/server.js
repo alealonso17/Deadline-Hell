@@ -4,7 +4,7 @@ import UserDataChecks from "./utils/UserDataChecks.js";
 import connection from './db/connection.js';
 import bcrypt from "bcrypt";
 import { LogInCheck } from "./utils/LogInCheck.js";
-import GetUserData from "./utils/getUserData.js";
+import GetUserData from "./utils/GetUserData.js";
 
 
 const app = express();
