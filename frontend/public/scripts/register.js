@@ -1,9 +1,10 @@
-import { json } from "body-parser";
 
-const submitRegister = document.getElementById("submitRegister");
 
-submitRegister.addEventListener('click', async (e) => {
+const registerForm = document.getElementById("registerForm");
+
+registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    console.log("hola")
 
     const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
