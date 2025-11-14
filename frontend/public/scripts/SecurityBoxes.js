@@ -65,7 +65,7 @@ export class SecurityBoxes {
 
         document.getElementById("confirmLogout").onclick = () => {
             localStorage.clear();
-            window.location.href = "logIn.html";
+            window.location.href = "./index.html";
         };
     };
 
