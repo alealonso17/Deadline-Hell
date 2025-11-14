@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
 import UserDataChecks from "./utils/UserDataChecks.js";
-import connection from './db/connection.js'
+import connection from './db/connection.js';
 import bcrypt from "bcrypt";
+import { LogInCheck } from "./utils/LogInCheck.js";
 
 
 const app = express();
@@ -75,7 +76,7 @@ app.post('/register', async (req, res) => {
     // SI TODO VA BIEN → CONTINÚA REGISTRO
     // =============================
 
-    const hashedPass = await bcrypt.hash(password, 10); 
+    const hashedPass = await bcrypt.hash(password, 10);
 
     await connection.execute(
       `INSERT INTO users (username, email, password_hash)
@@ -83,12 +84,45 @@ app.post('/register', async (req, res) => {
       [username, email, hashedPass]
     );
 
-    return res.status(200).json({ok:true, field:'',message: "Usuario registrado correctamente" }); 
+    return res.status(200).json({ ok: true, field: '', message: "Usuario registrado correctamente" });
 
   } catch (err) {
     console.log("Algo ocurrio mal en el registration")
-    console.log(err); 
+    console.log(err);
   }
+});
+
+
+
+
+
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+//LOG IN 
+//----------------------------------------------------------
+//----------------------------------------------------------
+
+
+app.post('/logIn', async (req, res) => {
+  try {
+
+    const { email, password } = req.body;
+    const status = await LogInCheck.start(email,password); 
+
+    if(status.isOk){
+      console.log(status.msg); 
+      return res.status(200).json({isOk: true , msg : status.msg}); 
+    }else{
+      console.log(status.msg); 
+      return res.status(500).json({isOk: false , msg : status.msg}); 
+    }
+
+  }catch(err) {
+    console.log("error en el login", err); 
+    return res.status(500).json({isOk: false , msg : err}); 
+  }
+  
 });
 
 // Puerto (Railway usa process.env.PORT)
