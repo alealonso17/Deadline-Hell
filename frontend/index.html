@@ -29,12 +29,13 @@
             </svg>
         </h1>
         <div class="flex items-center gap-10 justify-center">
-            <p class="text-gray-300 text-xl opacity-[60%]">Welcome, <b class="font-semibold text-white">Alejandro!</b>
+            <p class="text-gray-300 text-xl opacity-[60%]">Welcome, <b class="font-semibold text-white"
+                    id="usernameWelcome"></b>
             </p>
             <button class="flex items-center gap-1 px-3 py-2.5 rounded-2xl 
                text-gray-300 font-xl text-semibold opacity-[60%]
                hover:bg-white/10 hover:text-white 
-               transition">
+               transition" id="logOutBtn">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                     class="w-10 h-10 stroke-gray-300 group-hover:stroke-white transition" stroke="currentColor"
                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -53,54 +54,51 @@
         <section class=" w-[1000px] p-8 mt-10 rounded-3xl 
                 bg-white/5 border border-white/10 backdrop-blur-xl 
                 shadow-xl flex flex-col gap-6">
-    
-    <form class="flex flex-col gap-4">
 
-        <div class="flex gap-10 w-full">
-            <label for="addAssignment" class="flex flex-col w-full text-gray-300">
-                Exam / Assignment
-                <input type="text" id="addAssignment" 
-                    class="mt-1 w-full px-4 py-3 rounded-xl 
+            <form class="flex flex-col gap-4">
+
+                <div class="flex gap-10 w-full">
+                    <label for="addAssignment" class="flex flex-col w-full text-gray-300">
+                        Exam / Assignment
+                        <input type="text" id="addAssignment" class="mt-1 w-full px-4 py-3 rounded-xl 
                     bg-white/5 border border-white/10 
                     text-white placeholder-gray-500 
-                    focus:outline-none focus:ring-2 focus:ring-blue-500/50"
-                    placeholder="e.g. Math Exam">
-            </label>
+                    focus:outline-none focus:ring-2 focus:ring-blue-500/50" placeholder="e.g. Math Exam">
+                    </label>
 
-            <label for="due" class="flex flex-col w-full text-gray-300">
-                Due Date
-                <input type="date" id="due" 
-                    class="mt-1 w-full px-4 py-3 rounded-xl 
+                    <label for="due" class="flex flex-col w-full text-gray-300">
+                        Due Date
+                        <input type="date" id="due" class="mt-1 w-full px-4 py-3 rounded-xl 
                     bg-white/5 border border-white/10 
                     text-white placeholder-gray-500 
                     focus:outline-none focus:ring-2 focus:ring-blue-500/50">
-            </label>
-        </div>
+                    </label>
+                </div>
 
-        <button 
-            class="w-full flex items-center justify-center gap-3 
-            px-4 py-3 mt-2 rounded-2xl
-            bg-white/5 border border-white/10 
-            text-gray-300 font-medium
-            disabled:opacity-30 disabled:cursor-not-allowed
-            hover:bg-white/10 hover:text-white 
-            transition duration-300">
-            + Add Deadline
-        </button>
+                <button id="addDeadlineBtn" disabled class="w-full flex items-center justify-center gap-3 
+    px-4 py-3 mt-2 rounded-2xl cursor-pointer
+    bg-white/5 border border-white/10 
+    text-gray-300 font-medium
+    disabled:opacity-30 disabled:cursor-not-allowed
+    hover:bg-white/10 hover:text-white 
+    transition duration-300">
+                    + Add Deadline
+                </button>
 
-    </form>
+            </form>
 
-</section>
+        </section>
 
-        <section class="flex flex-col items-center w-[1000px] p-8 mt-10 rounded-3xl 
+        <section id="assesments" class="flex flex-col items-center w-[1000px] p-8 mt-10 rounded-3xl 
                 bg-white/5 border border-white/10 backdrop-blur-xl 
                 shadow-xl flex flex-col gap-6">
-                <p>
-                    No deadlines
-                </p>
+
         </section>
     </main>
     <script type="module" src="/frontend/public/scripts/index.js"></script>
+    <script type="module" src="/frontend/public/scripts/displayUserData.js"></script>
+    <script type="module" src="/frontend/public/scripts/main.js"></script>
+
 </body>
 
 </html>

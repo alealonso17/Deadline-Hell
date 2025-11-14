@@ -1,5 +1,4 @@
 
-
 const logInForm = document.getElementById("logInForm");
 const labelEmail = document.getElementById("labelEmail");
 let errorCount = 0;
@@ -40,9 +39,6 @@ logInForm.addEventListener('submit', async (e) => {
     }
 
     console.log(data.msg);
-
- 
-        console.log(data.userData);
  
 
     localStorage.setItem("userData", JSON.stringify(data.userData));
@@ -54,3 +50,4 @@ logInForm.addEventListener('submit', async (e) => {
 
 
 ); 
+

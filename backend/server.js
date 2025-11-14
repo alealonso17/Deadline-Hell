@@ -114,7 +114,6 @@ app.post('/logIn', async (req, res) => {
     if(status.isOk){
       console.log(status.msg); 
       const userData = await GetUserData.getAll(email); 
-      console.log(userData);
       return res.status(200).json({isOk: true , msg : status.msg, userData}); 
     }else{
       console.log(status.msg); 
