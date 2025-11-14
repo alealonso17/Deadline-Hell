@@ -145,7 +145,7 @@ app.post('/addAssesments', async (req, res) => {
     ); 
 
     console.log("Assesment added correctly✅");
-    const updatedUserData = GetUserData.getAll(email) ; 
+    const updatedUserData = await GetUserData.getAll(email) ; 
 
     return res.status(200).json({isOk : true, msg : "Assesment added correctly✅", updatedUserData}); 
     

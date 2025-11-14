@@ -1,6 +1,6 @@
-import { updateLocalStorage } from "./updateLocalStorage";
+import { updateLocalStorage } from "./updateLocalStorage.js";
 
-const addDeadlineBtn = document.getElementById("addDeadlineBtn");
+const assignmentForm = document.getElementById("assignmentForm");
 const titleInput = document.getElementById("addAssignment");  // ID REAL
 const dateInput = document.getElementById("due"); // ID REAL
 const reload = document.getElementById("reload"); 
@@ -22,7 +22,7 @@ updateButtonState();
 
 
 //For sending the assement
-addDeadlineBtn.addEventListener('submit', async (e) => {
+assignmentForm.addEventListener('submit', async (e) => {
 
     e.preventDefault();
 
@@ -35,17 +35,17 @@ addDeadlineBtn.addEventListener('submit', async (e) => {
 
     
 
-    const response = fetch("https://deadline-hell-production.up.railway.app/addAssesments", {
+    const response = await fetch("https://deadline-hell-production.up.railway.app/addAssesments", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: {
+        body: JSON.stringify({
             title,
             date,
             id,
             email
-        }
+        })
 
     });
 
@@ -54,8 +54,7 @@ addDeadlineBtn.addEventListener('submit', async (e) => {
     if(!data.isOk){
         console.log("Algo ocurrio mal pasando el assesment a mysql"); 
         return; 
-    }
-    
+    } 
     updateLocalStorage(data.updatedUserData); 
     console.log("updated local storage succesfully", localStorage.getItem("userData")); 
 
@@ -64,4 +63,6 @@ addDeadlineBtn.addEventListener('submit', async (e) => {
 
 
 //RELOAD BUTTON 
-reload.addEventListener('click', window.location.reload);  
+reload.onclick = () => {
+    window.location.reload(); 
+}  
