@@ -1,4 +1,4 @@
-import connection from "../db/connection";
+import connection from "../db/connection.js";
 import bcrypt from "bcrypt";
 
 
@@ -21,7 +21,7 @@ export class LogInCheck{
         const valid = await bcrypt.compare(password, hashedPass);   
         return valid
                 ? {msg : "Usuario se ha logeado correctamente", isOk: true }  
-                : {msg : "contra incorrecta", isOk: false }; 
+                : {msg : "contra incorrecta", isOk: false };
 
 
     }
