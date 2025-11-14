@@ -109,24 +109,55 @@ app.post('/logIn', async (req, res) => {
   try {
 
     const { email, password } = req.body;
-    const status = await LogInCheck.start(email,password); 
+    const status = await LogInCheck.start(email, password);
 
-    if(status.isOk){
-      console.log(status.msg); 
-      const userData = await GetUserData.getAll(email); 
-      return res.status(200).json({isOk: true , msg : status.msg, userData}); 
-    }else{
-      console.log(status.msg); 
-      return res.status(500).json({isOk: false , msg : status.msg}); 
+    if (status.isOk) {
+      console.log(status.msg);
+      const userData = await GetUserData.getAll(email);
+      return res.status(200).json({ isOk: true, msg: status.msg, userData });
+    } else {
+      console.log(status.msg);
+      return res.status(500).json({ isOk: false, msg: status.msg });
     }
 
-  }catch(err) {
-    console.log("error en el login", err); 
-    return res.status(500).json({isOk: false , msg : err}); 
+  } catch (err) {
+    console.log("error en el login", err);
+    return res.status(500).json({ isOk: false, msg: err });
   }
-  
+
 });
 
+
+
+//----------------------------------------------------------
+//----------------------------------------------------------
+//FOR GETTING THE ASSESMENTS
+//----------------------------------------------------------
+//----------------------------------------------------------
+
+app.post('/addAssesments', async (req, res) => {
+  try {
+    const { title, date, id, email } = req.body;
+
+    await connection.execute(
+      'INSERT INTO assessments (user_id, title, due_date) VALUES (?, ?, ?);',
+      [id, title, date]
+    ); 
+
+    console.log("Assesment added correctly✅");
+    const updatedUserData = GetUserData.getAll(email) ; 
+
+    return res.status(200).json({isOk : true, msg : "Assesment added correctly✅", updatedUserData}); 
+    
+
+  }catch(err){
+    console.log("Algo ocurrio mal pasando el assesment a mysql", err); 
+    return res.status(500).json({isOk : false, msg : "fail"}); 
+  }
+  
+
+
+});
 // Puerto (Railway usa process.env.PORT)
 const PORT = process.env.PORT || 3000;
 
