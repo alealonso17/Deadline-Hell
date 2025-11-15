@@ -5,8 +5,21 @@ Deadline Hell allows you to create, track, and visualize your assessments with a
 
 Built by Alejandro Alonso López as a full-stack productivity tool.
 
+![Login Screen](./frontend/public/images/ReadME/LogIn.png)
+![Dashboard 1](./frontend/public/images/ReadME/MAIN1.png)
+![Dashboard 2](./frontend/public/images/ReadME/MAIN2.png)
+
 ------------------------------------------------
 ------------------------------------------------
+
+🛠 Development Time
+
+This project was designed, built, and deployed in just 1 day — created to help myself survive a brutal exam season and keep all my deadlines clearly organized.
+
+
+------------------------------------------------
+------------------------------------------------
+
 
 🌐 Live Demo
 
