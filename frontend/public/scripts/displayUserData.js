@@ -95,25 +95,25 @@ assessmentsData.forEach(assesment => {
     <!-- PROGRESS -->
     <p class="text-gray-300 text-lg">Progress</p>
 
-    <div class="flex items-center gap-3">
+    <div  class="assesmentCard flex items-center gap-3" data-id="${assesment.id}">
         <!-- minus -->
-        <button class="w-12 h-12 rounded-xl bg-white/5 border border-white/10
+        <button class="minusBTN w-12 h-12 rounded-xl bg-white/5 border border-white/10
                        flex items-center justify-center text-2xl text-gray-300
-                       hover:bg-white/10 hover:text-white transition">−</button>
+                       hover:bg-white/10 hover:text-white transition" >−</button>
 
         <!-- BAR -->
         <div class="relative flex-1 h-10 bg-white/5 border border-white/10 rounded-full overflow-hidden">
-            <div class="absolute left-0 top-0 h-full bg-blue-500/40 rounded-full"
+            <div  class="progressBar absolute left-0 top-0 h-full bg-blue-500/40 rounded-full"
                  style="width: ${progress}%;">
             </div>
         </div>
 
         <!-- plus -->
-        <button class="w-12 h-12 rounded-xl bg-white/5 border border-white/10
+        <button class="plusBTN w-12 h-12 rounded-xl bg-white/5 border border-white/10
                        flex items-center justify-center text-2xl text-gray-300
-                       hover:bg-white/10 hover:text-white transition">+</button>
+                       hover:bg-white/10 hover:text-white transition" >+</button>
 
-        <span class="text-white text-lg ml-2">${progress}%</span>
+        <span class="progressText text-white text-lg ml-2">${progress}%</span>
     </div>
 
     <hr class="border-white/10">

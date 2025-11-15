@@ -80,7 +80,7 @@ app.post('/register', async (req, res) => {
 
   } catch (err) {
     console.error("❌ ERROR REAL EN /register:", err);
-    
+
     return res.status(500).json({
       ok: false,
       message: "Error interno en el servidor",
@@ -134,19 +134,19 @@ app.post('/addAssesments', async (req, res) => {
     await connection.execute(
       'INSERT INTO assessments (user_id, title, due_date) VALUES (?, ?, ?);',
       [id, title, date]
-    ); 
+    );
 
     console.log("Assesment added correctly✅");
-    const updatedUserData = await GetUserData.getAll(email) ; 
+    const updatedUserData = await GetUserData.getAll(email);
 
-    return res.status(200).json({isOk : true, msg : "Assesment added correctly✅", updatedUserData}); 
-    
+    return res.status(200).json({ isOk: true, msg: "Assesment added correctly✅", updatedUserData });
 
-  }catch(err){
-    console.log("Algo ocurrio mal pasando el assesment a mysql", err); 
-    return res.status(500).json({isOk : false, msg : "fail"}); 
+
+  } catch (err) {
+    console.log("Algo ocurrio mal pasando el assesment a mysql", err);
+    return res.status(500).json({ isOk: false, msg: "fail" });
   }
-  
+
 
 
 });
@@ -160,28 +160,66 @@ app.post('/addAssesments', async (req, res) => {
 //----------------------------------------------------------
 
 app.post("/deleteAssesment", async (req, res) => {
-  try{
+  try {
 
-    const {assesmentID, email} = req.body; 
-  
+    const { assesmentID, email } = req.body;
+
     await connection.execute(
       'DELETE FROM assessments WHERE id = ?;',
       [assesmentID]
-    ); 
+    );
 
-    console.log("Assesment Deleted Sucessfully"); 
-    const updatedUserData = await GetUserData.getAll(email); 
-    return res.status(200).json({isOk : true, updatedUserData, msg : "Assesment Deleted Sucessfully"}); 
+    console.log("Assesment Deleted Sucessfully");
+    const updatedUserData = await GetUserData.getAll(email);
+    return res.status(200).json({ isOk: true, updatedUserData, msg: "Assesment Deleted Sucessfully" });
 
 
-  }catch(err){
+  } catch (err) {
     console.log("Assesment Deleted Sucessfully", err);
-    return res.status(500).json({isOk : false, msg : "fail"}); 
+    return res.status(500).json({ isOk: false, msg: "fail" });
   }
 
 
-}); 
+});
 
+
+
+//addprogress 
+
+
+app.post("/addProgress", async (req, res) => {
+  try {
+    const { assesmentID, progress, userID } = req.body;
+
+    // 1. UPDATE PROGRESS IN MYSQL
+    await connection.execute(
+      "UPDATE assessments SET progress = ? WHERE id = ? AND user_id = ?",
+      [progress, assesmentID, userID]
+    );
+
+    // 2. GET UPDATED DATA
+    const [updatedAssessments] = await connection.execute(
+      "SELECT * FROM assessments WHERE user_id = ?",
+      [userID]
+    );
+
+    const [userRows] = await connection.execute(
+      "SELECT * FROM users WHERE id = ?",
+      [userID]
+    );
+
+    const updatedUserData = {
+      user: userRows[0],
+      assessments: updatedAssessments
+    };
+
+    return res.json({ isOk: true, updatedUserData });
+
+  } catch (err) {
+    console.log(err);
+    return res.json({ isOk: false, msg: "Error updating progress" });
+  }
+});
 // Puerto (Railway usa process.env.PORT)
 const PORT = process.env.PORT || 3000;
 

@@ -6,7 +6,7 @@ const assignmentForm = document.getElementById("assignmentForm");
 const titleInput = document.getElementById("addAssignment");  // ID REAL
 const dateInput = document.getElementById("due"); // ID REAL
 const reload = document.getElementById("reload");
-const deleteBTN = document.getElementById("delete") 
+const deleteBTN = document.getElementById("delete")
 
 function updateButtonState() {
     const title = titleInput.value.trim();
@@ -23,7 +23,7 @@ dateInput.addEventListener("input", updateButtonState);
 updateButtonState();
 
 
- 
+
 //For sending the assement
 assignmentForm.addEventListener('submit', async (e) => {
 
@@ -70,3 +70,97 @@ reload.onclick = () => {
 }
 
 
+//FOR ADDIING PROGRESS//FOR ADDING PROGRESS (PLUS)
+document.querySelectorAll(".plusBTN").forEach((btn) => {
+
+    btn.addEventListener("click", async () => {
+
+        const card = btn.closest(".assesmentCard");
+        const assesmentID = card.dataset.id;
+
+        const bar = card.querySelector(".progressBar");
+        const text = card.querySelector(".progressText");
+
+        let progress = parseInt(bar.style.width);
+
+        if (progress < 100) {
+            progress = Math.min(progress + 10, 100);
+            bar.style.width = progress + "%";
+            text.textContent = progress + "%";
+        }
+
+        // SEND TO BACKEND
+        try {
+            const userData = JSON.parse(localStorage.getItem("userData"));
+            const userID = userData.user.id;
+
+            const res = await fetch("https://deadline-hell-production.up.railway.app/addProgress", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    assesmentID,
+                    progress,
+                    userID
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.isOk) {
+                localStorage.setItem("userData", JSON.stringify(data.updatedUserData));
+            }
+
+        } catch(err) {
+            console.log("Network error saving progress", err);
+        }
+
+    });
+});
+
+
+//FOR SUBTRACTING PROGRESS (MINUS)
+document.querySelectorAll(".minusBTN").forEach((btn) => {
+
+    btn.addEventListener("click", async () => {
+
+        const card = btn.closest(".assesmentCard");
+        const assesmentID = card.dataset.id;
+
+        const bar = card.querySelector(".progressBar");
+        const text = card.querySelector(".progressText");
+
+        let progress = parseInt(bar.style.width);
+
+        if (progress > 0) {
+            progress = Math.max(progress - 10, 0);
+            bar.style.width = progress + "%";
+            text.textContent = progress + "%";
+        }
+
+        // SEND TO BACKEND
+        try {
+            const userData = JSON.parse(localStorage.getItem("userData"));
+            const userID = userData.user.id;
+
+            const res = await fetch("https://deadline-hell-production.up.railway.app/addProgress", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    assesmentID,
+                    progress,
+                    userID
+                })
+            });
+
+            const data = await res.json();
+
+            if (data.isOk) {
+                localStorage.setItem("userData", JSON.stringify(data.updatedUserData));
+            }
+
+        } catch(err) {
+            console.log("Network error saving progress", err);
+        }
+
+    });
+});
